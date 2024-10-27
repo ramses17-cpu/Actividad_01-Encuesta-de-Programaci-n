@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Probando VUE</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="Js/script.js"></script>
+    <link rel="stylesheet" href="Css/styles.css">
+</head>
+<body>
+    <!-- Montado APP -->
+    <section id="app">
+        <!--Expresiones-->
+        <h1>{{ product }}</h1>
+        <br />{{ description }}<br />
+        <br />Tipo: {{ type }}<br />
+        <br />ATK: {{ attack }} / DEF: {{ defense }}<br />
+        <br />Fecha de lanzamiento: {{ releaseDate }}<br />
+        <br />Rareza: {{ rarity }}<br />
+        <br />Edad de la carta: {{ cardAge }} años<br />
+
+        <div class="product_image">
+            <!-- imagen aquí-->
+            <img v-bind:src="image" alt="Imagen de carta">
+            <p v-if="inventory > 10">En existencia</p>
+            <p v-else-if="inventory <= 10 && inventory > 0">Apúrate que se lo ganan</p>
+            <p v-else>Sin existencia</p>
+            <p v-show="inStock">Sí tenemos, joven</p>
+            <p v-if="onSale">En oferta</p>
+        </div>
+        
+        <ul>
+            <li v-for="(detail, index) in details">{{ detail }}</li>
+        </ul>
+        
+        <!-- Mostrando variantes según la rareza -->
+        <div v-for="variant in variants.filter(variant => variant.rarity === rarity)" :key="variant.id">
+            {{ variant.color }}
+        </div>
+
+        <!-- Botón para añadir al carrito -->
+        <button v-on:click="addToCart">Añadir al carrito</button>
+
+        <!-- Mostrar items del carrito -->
+        <h2>Carrito</h2>
+        <p>Total artículos en carrito: {{ cartCount }}</p>
+    </section>
+    <script>
+        const mountedApp = app.mount('#app')
+    </script>
+</body>
+</html>
